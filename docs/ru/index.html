@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<!-- Primary Meta Tags -->
+<title>Веб-интерфейс Watmonitor - высота уровня воды</title>
+
+    <!-- SEO-optimized meta description -->
+    <meta name="description" content="Исходные коды для Arduino, ESP8266, ESP32 с поддержкой Ethernet, WiFi, и LoRaWAN для управления уровня воды. Панель IoT: визуализация данных уровня и объема, поддержка AR, интеграция с домашней автоматизацией.">
+
+    <!-- SEO-optimized meta keywords -->
+    <meta name="keywords" content="Arduino, ESP8266, ESP32, уровнемер, мониторинг уровня воды, LoRaWAN, Ethernet, WiFi, ультразвуковые датчики, микроконтроллеры, панель IoT, автоматизация, управление водой, ультразвуковой датчик уровня воды, NodeMCU, Wemos D1, Sigfox, измерение уровня воды, веб-приложение, JSON API, домашняя автоматизация, графическая визуализация, Domoticz, Grafana, Hassio, SCADA, система контроля">
+<link rel="icon" type="image/png" href="https://martinius96.github.io/termostat-ethernet/favicon.png">
+	<link rel="sitemap" type="application/xml" title="Sitemap" href="../../sitemap.xml" />
+	<meta name="google-site-verification" content="UwZZh2EXv3iWUAi_1Z0hLxVCz6ySJ4UdY_BPoLtejwo" />    	
+	<meta property='fb:admins' content='100001242570317'>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+	<style>
+		table, th, td {
+  			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+  		<div class="row">
+    			<div class="col-sm-12">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      	<li class="active"><a href="index.html">Измеритель уровня</a></li>
+	<li><a href="zapojenie.html">Участие</a></li>    
+		<li><a href="https://hladinomer.eu/QR/">Визуализация QR</a></li>
+		<li><a href="https://hladinomer.eu/AR/">Визуализация AR</a></li>
+		<li><a href="https://github.com/martinius96/hladinomer-studna-scripty/tree/master/examples/Tools_Integrations">Интеграции</a></li>
+<a href="../index.html"><img src="https://futbalovysen.sk/wp-content/uploads/slovakia.png" alt="Slovak flag.png, 2,2kB" title="Slovakia" height="32" width="32"></a>
+	<a href="../en/index.html"><img src="https://i2.wp.com/facsusa.com/wp-content/uploads/2017/05/Flag-of-England.png?ssl=1" alt="English.png, 2,2kB" title="English" height="32" width="32"></a>
+<a href="../fr/index.html"><img src="https://i.imgur.com/vX7NaZ7.png" alt="French.png, 2,2kB" title="French" height="32" width="32"></a> 
+<a href="../de/index.html"><img src="https://i.imgur.com/kY5DFH5.png" alt="German.png, 2,2kB" title="German" height="32" width="32"></a>
+<a href="../es/index.html"><img src="https://i.imgur.com/cIOW0G7.png" alt="Spanish.png, 2,2kB" title="Spanish" height="32" width="32"></a>
+<a href="https://github.com/martinius96/hladinomer-studna-scripty/tree/master/examples/Hladinomer" class="btn btn-info" role="button">Firmware</a>
+<!---<a href="th/zapojenie.html"><img src="https://i.imgur.com/9jqINRw.png" alt="Thai.png, 2,2kB" title="Thai" height="32" width="32"></a>-->
+</ul>
+  </div>
+</nav>  
+<div class="alert alert-success">
+<strong>Примеры исходных кодов Arduino, ESP8266, ESP32 (Ethernet/WiFi/LoRaWAN): </strong><a href="https://github.com/martinius96/hladinomer-studna-scripty/">Репозиторий проекта Github</a>
+</div>	
+<div class="alert alert-info">
+<strong>Панель управления IoT с вашим оборудованием можно попробовать здесь: </strong>
+<a href="https://hladinomer.eu/?lang=ru" class="btn btn-success" role="button">HTTPS IoT Dashboard</a>
+</div>		
+				<center><h2>Измерение высоты уровня воды в колодце ультразвуковым методом</h2></center>
+<hr>
+<center> 
+	<h2>Аппаратное обеспечение - совместимые микроконтроллеры AVR / ESP</h2>
+</center>	
+<hr>				
+<div class="row">
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/wtnzKqO.png" width="128px" height="128px" style="border-radius: 50%;" alt="Микроконтроллер управления Arduino UNO" title="Микроконтроллер управления Arduino UNO"><br><b><a href="https://www.ebay.com/itm/254532156570">Arduino UNO</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/XHC8DBe.png" width="128px" height="128px" style="border-radius: 50%;" alt="Микроконтроллер управления Arduino Nano" title="Микроконтроллер управления Arduino Nano"><br><b><a href="https://www.ebay.com/itm/252742123829">Arduino Nano</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/fPxr64q.png" width="128px" height="128px" style="border-radius: 50%;" alt="Микроконтроллер управления Arduino Mega 1280/25" title="Микроконтроллер управления Arduino Mega 1280/2560"><br><b><a href="https://www.ebay.com/itm/304122418040">Arduino Mega 1280/2560</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/koSyFuW.png" width="128px" height="128px" style="border-radius: 50%;" alt="Микроконтроллер управления NodeMCU v2 / v3 Lolin - ESP8266-12E / ESP8266-12F" title="Микроконтроллер управления NodeMCU v2 / v3 Lolin - ESP8266-12E / ESP8266-12F"><br><b><a href="https://www.ebay.com/itm/252718027546">NodeMCU (ESP8266)</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/FV9xi6K.png" width="128px" height="128px" style="border-radius: 50%;" alt="Микроконтроллер управления Wemos D1 Mini - ESP8266-12E / ESP8266-12F" title="Микроконтроллер управления Wemos D1 Mini - ESP8266-12E / ESP8266-12F"><br><b><a href="https://www.ebay.com/itm/254535886946">Wemos D1 / D1 Mini (ESP8266)</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/BczG03b.png" width="128px" height="128px" style="border-radius: 50%;" alt="Микроконтроллер управления ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S" title="Микроконтроллер управления ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S"><br><b><a href="https://www.ebay.com/itm/254953129496">ESP32 DevKit</a></b></center></div>
+</div>	
+<hr>	
+<center> 
+	<h2>Модули технологии передачи - Ethernet</h2>
+</center>
+<hr>
+<div class="row">
+<div class="col-sm-3"><center><img src="https://i.imgur.com/aaS35X2.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet shield Wiznet W5100" title="Ethernet shield Wiznet W5100"><br><b><a href="https://www.ebay.com/itm/185017231005">Ethernet экран Wiznet W5100</a></b></center></div>
+<div class="col-sm-3"><center><img src="https://i.imgur.com/mz4dhRA.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul Wiznet W5500" title="Ethernet modul Wiznet W5500"><br><b><a href="https://www.ebay.com/itm/263116282333">Ethernet модуль Wiznet W5500</a></b></center></div>
+<div class="col-sm-3"><center><img src="https://i.imgur.com/ppyXzMM.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul LAN 8720 PHY Ethernet" title="Ethernet modul LAN 8720 PHY Ethernet"><br><b><a href="https://www.ebay.com/itm/112102912664">Ethernet модуль LAN8720</a></b></center></div>
+<div class="col-sm-3"><center><img src="https://i.imgur.com/yIZEKct.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul MicroChip ENC28J60" title="Ethernet modul MicroChip ENC28J60"><br><b><a href="https://www.ebay.com/itm/252798986559">Ethernet модуль ENC28J60</a></b></center></div>
+</div>
+<hr>
+<center> 
+	<h2>Совместимые ультразвуковые датчики расстояния</h2>
+</center>	
+<hr>				
+<div class="row">
+<div class="col-sm-2"><center><img src="https://i.imgur.com/t4HDpjA.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ультразвуковой датчик расстояния - HC-SR04" title="Ультразвуковой датчик расстояния - HC-SR04"><br><b><a href="https://www.ebay.com/itm/191841217528">HC-SR04</a></b></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/WXWD0wt.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ультразвуковой датчик расстояния - HC-SR05" title="Ультразвуковой датчик расстояния - HC-SR05"><br><b><a href="https://www.ebay.com/itm/271666928961">HC-SR05</a></b></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/I7O3IGQ.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ультразвуковой датчик расстояния - JSN-SR04T" title="Ультразвуковой датчик расстояния - JSN-SR04T"><br><b><a href="https://www.ebay.com/itm/321714364470">JSN-SR04T</a></b></center></div>		
+<div class="col-sm-2"><center><img src="https://i.imgur.com/MuTRnZu.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ультразвуковой датчик расстояния - HY-SRF05" title="Ультразвуковой датчик расстояния - HY-SRF05"><br><b><a href="https://www.ebay.com/itm/252083407959">HY-SRF05</a></b></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/mKqoqgT.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ультразвуковой датчик расстояния - Parallax PING)))™" title="Ультразвуковой датчик расстояния - Parallax PING)))™"><br><b><a href="https://www.parallax.com/product/ping-ultrasonic-distance-sensor/">Parallax PING)))™</a></b></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/8Dogp3S.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ультразвуковой датчик расстояния - DYP-ME007" title="Ультразвуковой датчик расстояния - DYP-ME007"><br><b><a href="https://www.ebay.com/itm/154713159645">DYP-ME007</a></b></center></div>
+</div>					
+<hr><center><h1>Уровнемер - монитор уровня воды в колодце</h1></center><hr>
+<p style="text-align: justify;">
+Интернет-приборная панель для измерителя уровня воды включает в себя веб-интерфейс, который служит основой для визуализации измерений. Веб-приложение позволяет регистрировать данные о высоте уровня воды в скважине с использованием сенсорного узла - микроконтроллера. Измерение уровня воды производится с использованием ультразвуковых датчиков, таких как HC-SR04 или его водонепроницаемая версия JSN-SR04T. В текущей реализации программы также могут использоваться другие датчики с сигналами триггера/эха серий RCW, US-XXX, IOE-SR0X, SR0X, HC-SR0X, HY-SRF0X, DYP-MEXXX, Parallax PING)))™.
+Сенсорный узел регулярно выполняет 10 усредненных измерений ультразвуковым датчиком каждые 5 минут. Полученное значение передается на сервер через выбранный интерфейс (WiFi/Ethernet/IoT-сеть LoRaWAN/NB-IoT/Sigfox). Текущие данные о высоте уровня воды отображаются пользователю на приборной панели вместе с преобразованием в объем скважины и тенденцией уровня по сравнению с предыдущим измерением.
+Исторические данные о высоте уровня воды также доступны пользователю в табличной или графической визуализации с линейными графиками. Веб-интерфейс отзывчив и может адаптироваться к экранам смартфонов, компьютеров, планшетов и Smart TV. При получении данных бэкенд корректирует измеренный уровень воды на фактический на основе известной глубины скважины, поскольку датчик отправляет только дифференциальный уровень воды.
+С учетом реальной высоты уровня воды и известного диаметра скважины веб-интерфейс также может определить объем скважины в литрах.
+</p>
+<hr>
+<p style="text-align: justify;">
+Принцип работы ультразвуковых датчиков заключается в отправке триггерного сигнала длиной 10 мкс (микросекунд), который отражается от поверхности воды и возвращается в приемник - эхо. Метод "Time-of-Flight" используется для расчета времени между отправкой и получением сигнала с целью определения расстояния уровня воды от датчика, размещенного сверху колодца. Формула преобразования учитывает скорость звука, которая составляет 343 м/с при температуре 20 °C.
+Важным параметром ультразвуковых датчиков является ширина луча, или характеристика обнаружения. Например, датчик HC-SR04 обладает характеристикой обнаружения в 15°. Этот датчик имеет узкий луч, что делает его подходящим для более узких колодцев и резервуаров. Однако, он не является водонепроницаемым и имеет высокий риск коррозии в условиях влажных колодцев. По этой причине рекомендуется размещать данный ультразвуковой датчик над колодцем, чтобы уменьшить влияние влажности.
+Водонепроницаемый датчик JSN-SR04T, с другой стороны, обладает характеристикой обнаружения в 60°. Это существенно ограничивает его использование в узких колодцах, поскольку с увеличением расстояния луч расширяется, и необходима скважина с большим диаметром (например, диаметр скважины 6 метров, глубина 4,5 метра для гарантированного измерения без отражений). Ультразвуковые датчики не требуют регулярного обслуживания. Датчик JSN-SR04T оборудован электронной платой управления, которая защищена от воздействия влаги и воды. Максимальная измеряемая высота поверхности (уровня) варьируется от 400 до 450 см в соответствии с каталожными данными.
+</p>
+<div class="alert alert-info">
+<strong>Другие типы датчиков регистрации уровня воды, которые можно интегрировать (необходимо для создания собственной прошивки):</strong>
+<li><b>Лазер (LiDAR)</b> - (DFRobot DTOF LD19 LIDAR, DFRobot ToF Laser ...)</li>
+<li><b>Гидростатические (погружные)</b> - (LMK307, DPT200, PT20eco, HDL300...)</li>
+<li><b>Электростатический (емкостный/индуктивный)</b> - XKC-Y25-NPN</li>
+<li><b>Давление (перепад/с датчиком компенсации атмосферного давления)</b></li>
+<li><b>Оптический</b> — (GP2Y0A02YK0F, YD-02F, FS-IR02 ...)</li>
+<li><b>Механический (плавающий)</b></li>
+<li><b>Магнитный (Холл)</b> - (VCL9, Sen-Hz41wa ...)</li>
+<li><b>Микроволновая печь (радар)</b> - (CS476, CS475A-L, SP69, WLR 15.08.30...)</li>
+<li><b>Ультразвуковой</b> - (A01NYUB, URM37) или другой, вариант промышленной шины для вывода (RS-485, токовая петля 4-20 мА, Modbus RTU, M-bus, PROFINET) </ ли>
+<li><b>Примечание:</b> Если пересчет высоты уровня воды от дна производится на стороне микроконтроллера, то на веб-интерфейсе необходимо установить глубину колодца 0 см. </li>
+</div>
+<hr><center><h3>Видео демонстрация веб-интерфейса - Watmonitor:</h3></center><hr>
+<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+  <!-- Prvé video -->
+  <div style="position: relative; padding-bottom: 56.25%; flex: 1 1 31%; height: 0; overflow: hidden;">
+    <iframe 
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+      src="https://www.youtube.com/embed/QgxNx3OvNR0?si=f2YKQoHWrMqFNSau" 
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Druhé video -->
+  <div style="position: relative; padding-bottom: 56.25%; flex: 1 1 31%; height: 0; overflow: hidden;">
+    <iframe 
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+      src="https://www.youtube.com/embed/QIKqTWMAnfU?si=DDF0YcxmrXbYyWUs" 
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Tretie video -->
+  <div style="position: relative; padding-bottom: 56.25%; flex: 1 1 31%; height: 0; overflow: hidden;">
+    <iframe 
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+      src="https://www.youtube.com/embed/BHcPwljOq5Q?si=cG_CzFJL5QBt0vVS" 
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+</div>
+<hr><center><h4>Ультразвуковые датчики подходят для:</h4></center><hr>
+<div class="alert alert-success">
+<li> Выкопанные колодцы </li>
+<li> Септики и выгребные ямы </li>
+<li> Ручьи и озера </li>
+<li> Пластиковые резервуары для дождевой воды. </li>
+<li> Прочность (измерение объемного наполнения) </li>
+<li> Контейнеры (мониторинг отходов, наполнение сборных контейнеров) </li>
+<li> Котлы (мониторинг древесины, пеллет, угля, щепы) </li>
+<li> Шахты и подвалы (контроль отопления - уровень грунтовых вод) </li>
+</div>
+<hr><center><h3>Ультразвуковые датчики не подходят для:</h3></center><hr>
+<div class="alert alert-danger">
+<li> Пробуренные скважины (по детектирующим характеристикам - широкий луч) </li>
+<li> Трубы и трубки (из-за характеристик обнаружения - широкий луч) </li>
+<li> К скважинам с притоком (турбулентная поверхность ослабляет ультразвук, измерение невозможно / поэтапно) </li>
+<li> В местах с резким изменением температуры (температура влияет на время распространения звука, поэтому кажется, что даже стационарный уровень колеблется) </li>
+<li> Вакуумные баки (измерение невозможно) </li>
+</div>
+
+<hr><center><h3>Принцип работы измерителя уровня - Блок-схема</h3></center><hr>
+<center><img src="https://i.imgur.com/VCobc6h.jpg" style="display: block; max-width: 100%; height: auto;" alt="Уровнемер для выгребной ямы, септика, колодца, принцип измерения - ультразвуковой датчик расстояния" title="Уровнемер для выгребной ямы, септика, колодца, принцип измерения - ультразвуковой датчик расстояния"></center>
+<p style="text-align: justify;">
+
+Веб-интерфейс (панель IoT) использует тригонометрию для оценки максимальной измеряемой глубины скважины при известном диаметре скважины, что является дополнительным параметром для расчета объема скважины. Это позволяет веб-интерфейсу вычислять максимальную глубину скважины для каждого из датчиков на основе их характеристик. Проект разработан с учетом простоты использования даже для непрофессионалов, которые не знают, какой датчик лучше всего подходит для их конкретной скважины.
+Микроконтроллер, используемый в проекте, играет также важную роль. Для этого проекта можно использовать платформу Arduino (Uno/Mega) ревизии R3 с идентичной распиновкой, которую можно подключить к Ethernet-шилду для связи через интерфейс ICSP. Можно также использовать модули Ethernet, подключая их напрямую к аппаратным контактам SPI микроконтроллера. Поддерживаются Ethernet-модули производителя Wiznet W5100, W5500, USR-ES1, а также модуль Ethernet ENC28J60 от MicroChip. Все эти модули обеспечивают соединение HTTP с веб-сервером.
+Также поддерживаются микроконтроллеры WiFi от Espressif Systems - ESP8266 и ESP32. У них есть несколько режимов работы, такие как StandBy, StandBy + OTA с возможностью удаленной загрузки прошивки по локальной сети, и режим глубокого сна для приложений ULP - Deep Sleep. В спящем режиме для микроконтроллера ESP8266 необходимо добавить физическую перемычку между GPIO16 (WAKE) и RST.
+Микроконтроллеры ESP также позволяют осуществлять зашифрованную связь с веб-сервером по протоколу HTTPS. ESP32 можно использовать с модулем PHY Ethernet LAN8720, который поддерживает соединения HTTP и HTTPS. Платформы ESP8266 и ESP32 используют сертификат корневого центра сертификации (CA), встроенный в исходный код микроконтроллеров в формате .pem и сохраненный во флэш-памяти.
+Сертификат удостоверяющего центра действителен от 10 до 20 лет, что устраняет необходимость частого продления сертификата. Данные о текущей высоте уровня воды и объеме воды в скважине доступны из веб-интерфейса в формате JSON. Проект уровнемера может быть интегрирован через MQTT в систему домашней автоматизации (Hassio, Domoticz, Loxone) для отображения уровня воды на приборной панели, например, Grafana. В будущем также возможно управление периферией в подсистеме (орошение, полив, включение ГВС) на основе данных об уровне воды в скважине из веб-интерфейса.
+</p>
+<div class="alert alert-info">
+	<strong>Программные реализации для Arduino, ESP8266, ESP32 (требуется установка библиотеки): </strong><a href="https://hladinomer.eu/?lang=ru">Доступно здесь</a>
+</div>	
+<hr><center><h4>Доступные библиотеки для микроконтроллеров (Arduino / ESP)</h4></center><hr>
+<div class="alert alert-danger" style="word-wrap:break-word;">
+	Архив библиотеки (.zip) развернуть до <strong>C:/Users/[User]/Documents/Arduino/libraries</strong>
+</div>
+<div class="table-responsive">   
+<table class="table" style="border: 1px solid black;">
+<thead>
+<tr>
+<th style="width: 25%">Название библиотеки</th>
+<th style="width: 50%">Библиотечная функция</th>
+<th style="width: 25%">Скачать</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="width: 25%"><b>NewPing</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Библиотека для микроконтроллеров AVR (ATmega) Arduino Uno / Nano / Mega.
+Он позволяет проводить измерения с помощью ультразвуковых датчиков расстояния US-02X, IOE-SR0X, HC-SR0X, HY-SRF0X, JSN-SR0XT, DYP-ME007.
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FNewPing" class="btn btn-success" role="button">Скачать</a></td>
+</tr>
+<tr>
+<td style="width: 25%"><b>NewPingESP8266</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Библиотека для микроконтроллеров ESP8266 и ESP32.
+Он позволяет проводить измерения с помощью ультразвуковых датчиков расстояния US-02X, IOE-SR0X, HC-SR0X, HY-SRF0X, JSN-SR0XT, DYP-ME007.
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FNewPingESP8266" class="btn btn-success" role="button">Скачать</a></td>
+</tr>
+<tr>
+<td style="width: 25%"><b>VL53L1X</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Библиотека для микроконтроллеров Arduino, ESP8266 и ESP32.
+Позволяет проводить измерения ToF с помощью лазерных датчиков STMicroelectronics VL53L1X. 
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2Fvl53l1x-arduino-master" class="btn btn-success" role="button">Скачать</a></td>
+</tr>	
+<tr>
+<td style="width: 25%"><b>Ethernet2</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Библиотека для микроконтроллеров AVR (ATmega) Arduino Uno / Nano / Mega.
+Он обеспечивает связь с модулем Ethernet от Wiznet W5200 до W5500 через интерфейс SPI. 
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FEthernet2" class="btn btn-success" role="button">Скачать</a></td>
+</tr>
+<tr>
+<td style="width: 25%"><b>Ethernet3</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Библиотека для микроконтроллеров AVR (ATmega) Arduino Uno / Nano / Mega.
+Он обеспечивает связь с Ethernet-модулем Wiznet W5500 V2 - USR-ES1 через интерфейс SPI. 
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FEthernet3" class="btn btn-success" role="button">Скачать</a></td>
+</tr>
+</tbody>
+</table>
+	</div>
+<hr>
+<center> 
+     <h3>Скриншоты веб-приложения монитора уровня воды</h3>
+     <hr>
+	<a href="https://hladinomer.eu/?lang=ru">
+    	<img src="https://i.imgur.com/ZON5BAQ.png" style="display: block; max-width: 100%; height: auto;" alt="Общий обзор измеренных данных в веб-интерфейсе проекта уровнемера" title="Общий обзор измеренных данных в веб-интерфейсе проекта уровнемера">
+    	<img src="https://i.imgur.com/bsdhIYP.png" style="display: block; max-width: 100%; height: auto;" alt="Исторический обзор измеренных данных с отметкой времени в табличной визуализации - Измеритель уровня" title="Исторический обзор измеренных данных с отметкой времени в табличной визуализации - Измеритель уровня"> 
+	<img src="https://i.imgur.com/7awFLsz.png" style="display: block; max-width: 100%; height: auto;" alt="Тревожные представления максимального и минимального уровня воды в колодце" title="Тревожные представления максимального и минимального уровня воды в колодце"> 
+	<img src="https://i.imgur.com/7NY0TZY.png" style="display: block; max-width: 100%; height: auto;" alt="Графическая визуализация уровня воды за сутки, 7 дней, 30 дней, год - измеритель уровня" title="Графическая визуализация уровня воды за сутки, 7 дней, 30 дней, год - измеритель уровня"> 
+	<img src="https://i.imgur.com/62K3i3T.png" style="display: block; max-width: 100%; height: auto;" alt="ESP32 - FreeRTOS - ESP-IDF - измерение ультразвуковым датчиком и передача данных на веб-сервер через HTTP, метод передачи POST" title="ESP32 - FreeRTOS - ESP-IDF - измерение ультразвуковым датчиком и передача данных на веб-сервер через HTTP, метод передачи POST"> 	
+	<img src="https://i.imgur.com/xyhyH8A.png" style="display: block; max-width: 100%; height: auto;" alt="ESP32 - FreeRTOS - ESP-IDF - измерение ультразвуковым датчиком и передача данных на веб-сервер через HTTPS, метод передачи POST" title="ESP32 - FreeRTOS - ESP-IDF - измерение ультразвуковым датчиком и передача данных на веб-сервер через HTTPS, метод передачи POST">	
+<img src="https://i.imgur.com/U3LqXzP.jpeg" style="display: block; max-width: 100%; height: auto;" alt="Поддерживаемое оборудование для проекта измерителя уровня - Arduino - Ethernet - WiFi - ESP8266 - ESP32" title="Поддерживаемое оборудование для проекта измерителя уровня - Arduino - Ethernet - WiFi - ESP8266 - ESP32"> 
+<img src="https://i.imgur.com/du39Nwp.jpg" style="display: block; max-width: 100%; height: auto;" alt="Ультразвуковые датчики расстояния HC-SR04 и JSN-SR04T с аппаратным обеспечением для Watmonitor" title="Ультразвуковые датчики расстояния HC-SR04 и JSN-SR04T с аппаратным обеспечением для Watmonitor"> 
+	</a>
+		</center>
+            <hr> 
+	
+ </div>
+		</div>
+</div>
+</body>
+</html>

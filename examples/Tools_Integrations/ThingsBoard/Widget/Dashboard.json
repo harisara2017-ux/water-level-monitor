@@ -1,0 +1,100 @@
+{
+  "title": "Hladinomer",
+  "image": null,
+  "mobileHide": false,
+  "mobileOrder": null,
+  "configuration": {
+    "description": "",
+    "widgets": {
+      "13061349-dbc9-7ecf-2d94-0722045a6389": {
+        "typeFullFqn": "tenant.hladinomer_widget",
+        "type": "latest",
+        "sizeX": 7.5,
+        "sizeY": 3,
+        "config": {
+          "datasources": [
+            {
+              "type": "device",
+              "name": "",
+              "deviceId": "f79113d0-96e6-11f0-91df-7ffa16af2ee9",
+              "dataKeys": [
+                {
+                  "name": "active",
+                  "type": "attribute",
+                  "label": "active",
+                  "color": "#2196f3",
+                  "settings": {}
+                }
+              ],
+              "alarmFilterConfig": {
+                "statusList": [
+                  "ACTIVE"
+                ]
+              }
+            }
+          ],
+          "showTitle": true,
+          "backgroundColor": "#fff",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {},
+          "title": "Hladinomer_WIDGET",
+          "decimals": null
+        },
+        "row": 0,
+        "col": 0,
+        "id": "13061349-dbc9-7ecf-2d94-0722045a6389"
+      }
+    },
+    "states": {
+      "default": {
+        "name": "Hladinomer",
+        "root": true,
+        "layouts": {
+          "main": {
+            "widgets": {
+              "13061349-dbc9-7ecf-2d94-0722045a6389": {
+                "sizeX": 7,
+                "sizeY": 5,
+                "row": 0,
+                "col": 0
+              }
+            },
+            "gridSettings": {
+              "layoutType": "default",
+              "backgroundColor": "#eeeeee",
+              "columns": 24,
+              "margin": 10,
+              "outerMargin": true,
+              "backgroundSizeMode": "100%"
+            }
+          }
+        }
+      }
+    },
+    "entityAliases": {},
+    "filters": {},
+    "timewindow": {
+      "selectedTab": 0,
+      "realtime": {
+        "realtimeType": 0,
+        "interval": 1000,
+        "timewindowMs": 60000
+      },
+      "aggregation": {
+        "type": "AVG"
+      }
+    },
+    "settings": {
+      "stateControllerId": "entity",
+      "showTitle": false,
+      "showDashboardsSelect": true,
+      "showEntitiesSelect": true,
+      "showDashboardTimewindow": true,
+      "showDashboardExport": true,
+      "toolbarAlwaysOpen": true
+    }
+  },
+  "name": "Hladinomer",
+  "resources": []
+}

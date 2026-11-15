@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>IoT Dashboard for Water Monitoring – Arduino & ESP32</title>
+<!-- Meta Description -->
+<meta name="description" content="IoT dashboard for water level monitoring with Arduino, ESP8266, and ESP32. Track real-time data, analyze trends, and manage sensors for wells and tanks." />
+<!-- Meta Keywords -->
+<meta name="keywords" content="IoT water level monitoring, Arduino projects, ESP8266 water level sensor, ESP32 IoT dashboard, ultrasonic water sensor, LoRaWAN monitoring, real-time water tracking, open-source IoT firmware, home automation systems, MQTT data visualization, Arduino libraries, well water monitoring, water tank sensors, environmental IoT solutions" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Water Level Monitor IoT Dashboard for Arduino, ESP8266, ESP32 | Source Code & Firmware" />
+<meta property="og:description" content="Access open-source water level monitoring solutions featuring firmware and web interface for Arduino, ESP8266, ESP32. Ideal for monitoring wells, tanks, and environmental water levels with real-time and historical data visualization." />
+<meta property="og:image" content="https://i.imgur.com/NsrPN7k.png" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Water Level Monitor IoT Dashboard for Arduino, ESP8266, ESP32 | Source Code & Firmware" />
+<meta name="twitter:description" content="Open-source water level monitoring dashboard for Arduino, ESP8266, ESP32. Featuring real-time data, historical graphs, sensor data visualization, and firmware." />
+<meta name="twitter:image" content="https://i.imgur.com/NsrPN7k.png" />
+	<meta name="robots" content="index, follow">
+	<link rel="icon" type="image/png" href="https://martinius96.github.io/termostat-ethernet/favicon.png">
+	<link rel="sitemap" type="application/xml" title="Sitemap" href="../../sitemap.xml" />
+	<meta name="google-site-verification" content="UwZZh2EXv3iWUAi_1Z0hLxVCz6ySJ4UdY_BPoLtejwo" />    	
+	<meta property='fb:admins' content='100001242570317'>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>   
+	<style>
+		table, th, td {
+  			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+  		<div class="row">
+    			<div class="col-sm-12">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      	<li class="active"><a href="index.html">Water Level monitor</a></li>
+	<!---<li><a href="zrazkomer.html">Rainfall monitor</a></li>-->
+	<li><a href="zapojenie.html">Wiring</a></li>      
+	<li><a href="https://hladinomer.eu/QR/">QR static visualization</a></li>
+		<li><a href="https://hladinomer.eu/AR/">AR visualization</a></li>
+		<li><a href="https://github.com/martinius96/hladinomer-studna-scripty/tree/master/examples/Tools_Integrations">Integrations</a></li>
+<a href="../index.html"><img src="https://futbalovysen.sk/wp-content/uploads/slovakia.png" alt="Slovak flag.png, 2,2kB" title="Slovakia" height="32" width="32"></a>
+<a href="../fr/index.html"><img src="https://i.imgur.com/vX7NaZ7.png" alt="French.png, 2,2kB" title="French" height="32" width="32"></a> 
+<a href="../de/index.html"><img src="https://i.imgur.com/kY5DFH5.png" alt="German.png, 2,2kB" title="German" height="32" width="32"></a>  
+<a href="../ru/index.html"><img src="https://i.imgur.com/3R5jVrX.png" alt="Russian.png, 2,2kB" title="Russian" height="32" width="32"></a>
+<a href="../es/index.html"><img src="https://i.imgur.com/cIOW0G7.png" alt="Spanish.png, 2,2kB" title="Spanish" height="32" width="32"></a>
+<a href="https://github.com/martinius96/hladinomer-studna-scripty/tree/master/examples/Hladinomer" class="btn btn-info" role="button">Firmware</a>
+<!---<a href="th/zapojenie.html"><img src="https://i.imgur.com/9jqINRw.png" alt="Thai.png, 2,2kB" title="Thai" height="32" width="32"></a>-->
+ </ul>
+  </div>
+</nav>  
+<div class="alert alert-success">
+    <strong>Explore source codes for Arduino, ESP8266, ESP32, (Ethernet / WiFi / LoRaWAN): </strong>
+    <a href="https://github.com/martinius96/hladinomer-studna-scripty/" target="_blank">GitHub project repository</a>
+</div>
+
+<div class="alert alert-info">
+    <strong>Immerse yourself in our IoT dashboard featuring your hardware: </strong>
+<a href="https://hladinomer.eu/?lang=en" class="btn btn-success" role="button">HTTPS IoT Dashboard</a>
+</div>
+<center><h1>Water Level Monitor Project</h1></center>
+<hr>
+<center> 
+	<h2>Supported microcontrollers for Water Level monitor - AVR / ESP</h2>
+</center>	
+     <hr>				
+<div class="row">
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/wtnzKqO.png" width="128px" height="128px" style="border-radius: 50%;" alt="Control microcontroller Arduino UNO" title="Control microcontroller Arduino UNO"><br><b><a href="https://www.ebay.com/itm/254532156570">Arduino UNO</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/XHC8DBe.png" width="128px" height="128px" style="border-radius: 50%;" alt="Control microcontroller Arduino Nano" title="Control microcontroller Arduino Nano"><br><b><a href="https://www.ebay.com/itm/252742123829">Arduino Nano</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/fPxr64q.png" width="128px" height="128px" style="border-radius: 50%;" alt="Control microcontroller Arduino Mega 1280/25" title="Control microcontroller Arduino Mega 1280/2560"><br><b><a href="https://www.ebay.com/itm/304122418040">Arduino Mega 1280/2560</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/koSyFuW.png" width="128px" height="128px" style="border-radius: 50%;" alt="Control microcontroller NodeMCU v2 / v3 Lolin - ESP8266-12E / ESP8266-12F" title="Control microcontroller NodeMCU v2 / v3 Lolin - ESP8266-12E / ESP8266-12F"><br><b><a href="https://www.ebay.com/itm/252718027546">NodeMCU 0.9 / 1.0</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/FV9xi6K.png" width="128px" height="128px" style="border-radius: 50%;" alt="Control microcontroller Wemos D1 Mini - ESP8266-12E / ESP8266-12F" title="Control microcontroller Wemos D1 Mini - ESP8266-12E / ESP8266-12F"><br><b><a href="https://www.ebay.com/itm/254535886946">Wemos D1 Mini</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/BczG03b.png" width="128px" height="128px" style="border-radius: 50%;" alt="Control microcontroller ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S" title="Control microcontroller ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S"><br><b><a href="https://www.ebay.com/itm/254953129496">ESP32 DevKit</a></b></center></div>
+</div>	
+<hr>	
+<center> 
+	<h2>Transmission technology modules - Ethernet</h2>
+</center>
+<hr>
+<div class="row">
+<div class="col-sm-3"><center><img src="https://i.imgur.com/aaS35X2.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet shield Wiznet W5100" title="Ethernet shield Wiznet W5100"><br><b><a href="https://www.ebay.com/itm/185017231005">Ethernet shield Wiznet W5100</a></b></center></div>
+<div class="col-sm-3"><center><img src="https://i.imgur.com/mz4dhRA.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul Wiznet W5500" title="Ethernet modul Wiznet W5500"><br><b><a href="https://www.ebay.com/itm/263116282333">Ethernet module Wiznet W5500</a></b></center></div>
+<div class="col-sm-3"><center><img src="https://i.imgur.com/ppyXzMM.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul LAN 8720 PHY Ethernet" title="Ethernet modul LAN 8720 PHY Ethernet"><br><b><a href="https://www.ebay.com/itm/112102912664">Ethernet module PHY LAN8720</a></b></center></div>
+<div class="col-sm-3"><center><img src="https://i.imgur.com/yIZEKct.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul MicroChip ENC28J60" title="Ethernet modul MicroChip ENC28J60"><br><b><a href="https://www.ebay.com/itm/252798986559">Ethernet module ENC28J60</a></b></center></div>
+</div>
+<hr>
+<center> 
+	<h2>Compatible ultrasonic proximity sensors</h2>
+</center>	
+     <hr>				
+<div class="row">
+<div class="col-sm-3"><center><img src="https://i.imgur.com/t4HDpjA.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ultrasonic proximity sensor - HC-SR04" title="Ultrasonic proximity sensor - HC-SR04"><br><b><a href="https://www.ebay.com/itm/191841217528">HC-SR04</a></b></center></div>
+<div class="col-sm-3"><center><img src="https://i.imgur.com/I7O3IGQ.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ultrasonic proximity sensor - JSN-SR04T" title="Ultrasonic proximity sensor - JSN-SR04T"><br><b><a href="https://www.ebay.com/itm/321714364470">JSN-SR04T</a></b></center></div>		
+<div class="col-sm-3"><center><img src="https://i.imgur.com/BrGCflJ.png" width="128px" height="128px" style="border-radius: 50%;" alt="ToF laser ranging sensor VL53L0X" title="ToF laser ranging sensor VL53L0X"><br><b>VL53L0X (200 cm)</b></center></div>	
+<div class="col-sm-3"><center><img src="https://i.imgur.com/ueXkyYY.png" width="128px" height="128px" style="border-radius: 50%;" alt="ToF laser ranging sensor VL53L1X" title="ToF laser ranging sensor VL53L1X"><br><b>VL53L1X (400 cm)</b></center></div>
+</div>									
+<hr>
+<center> 
+	<h2> Watmonitor - Arduino / ESP8266 / ESP32 </h2> 
+</center> 
+<hr>
+<p style = "text-align: justify;">
+Water level monitoring system (Watmonitor) is a IoT dasboard based on PHP, HTML5 and lightweight Bootstrap Bare template.
+It provides gateway for sensor node to pass the data of water level measurement into SQL database in periodical 5-minute intervals.
+For users it comes with user friendly responsive web interface that offers real-time data of water level and water volume, connection status of sensor node, but it provides also historical data visualisations via graphs, table visualisations or also minimal or maximal measurement per day, week or month.
+The web interface is universal and can be used with any sensor node for hobby / industrial usage.
+There are example source codes available for open-source hardware Arduino, ESP32 and ESP8266 and ultrasonic sensors that can be used for sending data into the dashboard.
+These examples utilize ultrasonic sensors, including popular models like HC-SR04 and its waterproof variant JSN-SR04T, to record data about the water level in dug wells through a sensor node equipped with a microcontroller. 
+In addition to HC-SR04 and JSN-SR04T, our program supports various sensors with Trigger/Echo signals, such as RCW, US-XXX, IOE-SR0X, SR0X, HC-SR0X, HY-SRF0X, DYP-MEXXX, and Parallax PING)))™ series, providing flexibility in implementation.
+There is possible also to use ToF laser ranging sensors such as VL53L0X or VL53L1X (200 or 400 cm range). 
+The sensor node routinely conducts 10 averaged measurements with the ultrasonic sensor every 5 minutes. 
+The recorded values are then transmitted to the server via multiple interface options, including WiFi, Ethernet, IoT network LoRaWAN, NB-IoT, or Sigfox.
+Web interface comes in various language options.
+</p>
+<center>
+<img src="https://i.imgur.com/Y71LFD3.png" style="display: block; max-width: 100%; height: auto;" alt="Water Level Monitor webapp dashboard in OS Android with automatic data update via jQuery" title="Water Level Monitor webapp dashboard in OS Android with automatic data update via jQuery">
+</center>
+<p style = "text-align: justify;">
+Ultrasonic sensors operate by sending a Trigger signal with a 10 μs duration, which reflects off the water surface and returns as the Echo. The Time-of-Flight method calculates the time between transmission and reception to determine the distance of the water level from the sensor.  The speed of sound is calculated at 343 m/s at a temperature of 20 °C, forming the basis for accurate distance measurement. An essential parameter is the beam width, representing the detection characteristic. The HC-SR04 sensor features a narrow 15° detection characteristic, making it suitable for narrower wells and tanks. While the HC-SR04 is ideal for narrower environments, it is not waterproof and has a higher risk of corrosion in wet conditions. Therefore, placing it above the well is recommended to minimize the impact of humidity. The JSN-SR04T, a waterproof sensor, has a wider 60° detection characteristic. However, this limits its use in narrow wells, as the beam widens with distance. A larger well diameter is required (e.g., 6 meters diameter for a well depth of 4.5 meters) to guarantee accurate measurements without reflections. Ultrasonic sensors, in general, are maintenance-free. However, the JSN-SR04T sensor has a control electronic board that should not be exposed to moisture and water. The sensors, including JSN-SR04T, can measure a maximum height of approximately 400 to 450 cm, providing a versatile range for various well depths. Understanding the intricacies of ultrasonic water level sensors empowers effective monitoring, ensuring precision and reliability in diverse environmental conditions. Explore placement strategies and the features of HC-SR04 and JSN-SR04T for optimal results in your water level measurement system.
+</p>
+<div class = "alert alert-info">
+Integrate various water level sensors into your system by creating customized firmware. Each sensor type brings unique capabilities, ensuring flexibility and adaptability to different monitoring scenarios.
+ 	<strong> Other types of water level sensors that can be integrated (you need to create your own firmware): </strong>
+ 	<li> <b>Laser (LiDAR)</b> - (DFRobot DTOF LD19 LIDAR, DFRobot ToF Laser ...)</li>
+	<li> <b>Hydrostatic</b> - (LMK307, DPT200, PT20eco, HDL300 ...) </li>
+	<li> <b>Electrostatic</b> (capacitive / inductive) - XKC-Y25-NPN</li>
+	<li> <b>Pressure</b> (differential / with compensating atmospheric pressure sensor) </li>
+	<li> <b>Optical</b> - (GP2Y0A02YK0F, YD-02F, FS-IR02 ...)</li>
+	<li> <b>Mechanical (float / bobber)</b> </li>
+	<li> <b>Magnetic (Hall)</b> - (VCL9, Sen-Hz41wa ...)</li>
+	<li> <b>Microwave (radar)</b> - (CS476, CS475A-L, SP69, WLR 8/15/30 ...)</li>
+	<li> <b>Ultrasonic</b> - (A01NYUB, URM37), another type of output (RS-485, 4-20 mA, Modbus RTU, M-bus, PROFINET) </li>
+	<li> <b>Note:</b> If the water level from the bottom of well is recalculated on the microcontroller's side, parameter - Well depth in web interface must be set to 0 cm! </li>
+</div>
+<hr><center><h4>Video demonstration of the web interface - Watmonitor:</h4></center><hr>
+<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+  <!-- Prvé video -->
+  <div style="position: relative; padding-bottom: 56.25%; flex: 1 1 31%; height: 0; overflow: hidden;">
+    <iframe 
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+      src="https://www.youtube.com/embed/QgxNx3OvNR0?si=f2YKQoHWrMqFNSau" 
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Druhé video -->
+  <div style="position: relative; padding-bottom: 56.25%; flex: 1 1 31%; height: 0; overflow: hidden;">
+    <iframe 
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+      src="https://www.youtube.com/embed/QIKqTWMAnfU?si=DDF0YcxmrXbYyWUs" 
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Tretie video -->
+  <div style="position: relative; padding-bottom: 56.25%; flex: 1 1 31%; height: 0; overflow: hidden;">
+    <iframe 
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+      src="https://www.youtube.com/embed/BHcPwljOq5Q?si=cG_CzFJL5QBt0vVS" 
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+</div>
+<hr><center><h4>Ultrasonic sensors are suitable for:</h4></center><hr>
+<div class="alert alert-success">
+<li> Dug waterwells </li>
+<li> Digged waterwells </li>
+<li> Septics and cesspools </li>
+<li> Streams and lakes </li>
+<li> Plastic rainwater tanks </li>
+<li> Silos (measuring bulk filling) </li>
+<li> Containers (waste monitoring, fill level) </li>
+<li> Boiler rooms (monitoring of wood, pellets, coal, wood chips materials) </li>
+<li> Shafts and cellars (flooding - groundwater height monitoring) </li>
+</div>
+<hr><center><h4>Ultrasonic sensors are NOT suitable for:</h4></center><hr>
+<div class="alert alert-danger">
+<li> Drilled waterwells (due to detection characteristics - wide beam) </li>
+<li> Pipes and tubes (due to detection characteristics - wide beam) </li>
+<li> To waterwells with a gradient tributary (rippled water surface attenuates ultrasound, measurement is impossible) </li>
+<li> In places with a sudden change in temperature (temperature affects the time of sound propagation, so even the stationary level appears to fluctuate) </li>
+<li> Vacuum tanks (measurement is not possible) </li>
+</div>
+<hr><center><h3>Principle of water level measurement and data transmission - Block diagram</h3></center><hr>
+<center><img src="https://i.imgur.com/VCobc6h.jpg" style="display: block; max-width: 100%; height: auto;" alt="Level meter for cesspool, septic tank, well, measuring principle - ultrasonic proximity sensor" title="Level meter for cesspool, septic tank, well, measuring principle - ultrasonic proximity sensor"></center>
+<p style = "text-align: justify;">
+Enhance your well monitoring experience with our advanced web interface, backed by a powerful backend that leverages trigonometry to estimate the maximum depth of your well. This innovative solution is designed to calculate the optimal depth for each sensor, based on its unique characteristics, making it accessible even for those unfamiliar with sensor selection.
+The project seamlessly integrates with microcontrollers, with the option to use the widely popular Arduino platform (Uno/Mega) in revision R3. This compatibility extends to Ethernet shields communicating via the ICSP interface. Alternatively, Ethernet modules such as Wiznet W5100, W5500, and USR-ES1, as well as MicroChip's ENC28J60 with software TCP stack, are fully supported, enabling HTTP connectivity on port 80.
+Explore the versatility of WiFi microcontrollers, including Espressif Systems' ESP8266 and ESP32, both of which offer various operating modes such as StandBy, StandBy + OTA for remote firmware updates, and deep sleep mode for ultra-low-power applications.
+The ESP microcontrollers stand out by providing encrypted communication through the HTTPS protocol. ESP32 goes a step further, allowing the use of PHY Ethernet with the LAN8720 RMII interface, supporting both HTTP and HTTPS connections.
+Security is a priority with the incorporation of Root CA certificates in .pem format directly into the source code of the microcontrollers, stored in flash memory (PROGMEM) to optimize RAM usage. These certificates, issued for 10 to 20 years, eliminate the need for frequent renewals.
+Effortlessly access real-time data on water level and volume in JSON format through the web interface. Take your well monitoring to the next level by integrating our water level monitor project via MQTT into popular home automation platforms like Hassio, Domoticz, and Loxone. Visualize data on dedicated dashboards such as Grafana, Ubidots, Thingsboard, or Cayenne.
+Empower your peripheral control capabilities by using data from the web interface to manage irrigation, watering, and domestic waterworks. Elevate your well monitoring experience with our user-friendly and technologically advanced solution, catering to both experts and novices alike.
+</p>
+<div class="table-responsive">   
+<table class="table" style="border: 1px solid black;">
+<thead>
+<tr>
+<th>Operating mode</th>
+<th>StandBy</th>
+<th>StandBy + Over The Air (OTA)</th>
+<th>Ultra Low Power (ULP)</th>
+<th>FreeRTOS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Microcontroller</strong></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Arduino + Ethernet</td>
+<td>✓</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>ESP8266</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>×</td>
+</tr>
+<tr>
+<td>ESP32</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>				
+</div>
+<div class = "alert alert-info">
+<strong>Source codes for Arduino, ESP8266, ESP32 (required installation of libraries): </strong> <a href="https://hladinomer.eu/?lang=en">Available here</a>
+</div>
+<hr><center><h4>Available libraries for microcontrollers (Arduino / ESP)</h4></center><hr>
+<div class="alert alert-danger" style="word-wrap:break-word;">
+	Library archive (.zip) extract to <strong>C:/Users/[User]/Documents/Arduino/libraries</strong>
+</div>
+<div class="table-responsive">   
+<table class="table" style="border: 1px solid black;">
+<thead>
+<tr>
+<th style="width: 25%">Library name</th>
+<th style="width: 50%">Library function</th>
+<th style="width: 25%">Download</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="width: 25%"><b>NewPing</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Library for AVR microcontrollers (ATmega) Arduino Uno / Nano / Mega.
+It allows to perform measurements with ultrasonic distance sensors RCW, US-XXX, IOE-SR0X, SR0X, HC-SR0X, HY-SRF0X, DYP-MEXXX, Parallax PING)))™.
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FNewPing" class="btn btn-success" role="button">Download</a></td>
+</tr>
+<tr>
+<td style="width: 25%"><b>NewPingESP8266</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Library for ESP8266 and ESP32 microcontrollers.
+It allows to perform measurements with ultrasonic distance sensors RCW, US-XXX, IOE-SR0X, SR0X, HC-SR0X, HY-SRF0X, DYP-MEXXX, Parallax PING)))™.
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FNewPingESP8266" class="btn btn-success" role="button">Download</a></td>
+</tr>
+	<tr>
+<td style="width: 25%"><b>VL53L1X</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Library for Arduino, ESP8266 and ESP32 microcontrollers.
+Allows you to perform ToF measurements with STMicroelectronics VL53L1X laser sensors.
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2Fvl53l1x-arduino-master" class="btn btn-success" role="button">Download</a></td>
+</tr>
+<tr>
+<td style="width: 25%"><b>Ethernet2</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Library for AVR microcontrollers (ATmega) Arduino Uno / Nano / Mega.
+It enables communication with the Ethernet module Wiznet W5200 to W5500 via the SPI interface.
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FEthernet2" class="btn btn-success" role="button">Download</a></td>
+</tr>
+<tr>
+<td style="width: 25%"><b>Ethernet3</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Library for AVR microcontrollers (ATmega) Arduino Uno / Nano / Mega.
+It enables communication with Ethernet module Wiznet W5500 V2 - USR-ES1 via SPI interface.
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FEthernet3" class="btn btn-success" role="button">Download</a></td>
+</tr>
+</tbody>
+</table>
+	</div>
+<hr>
+<center> 
+     <h3>Screenshots of Water Level monitor webapp</h3>
+     <hr>
+	<a href="https://hladinomer.eu/?lang=en">
+    	<img src="https://i.imgur.com/G27ZaTC.png" style="display: block; max-width: 100%; height: auto;" alt="WaterWell Level monitor - webapp - main page - Last measured values with automatic refresh - AJAX" title="WaterWell Level monitor - webapp - main page - Last measured values with automatic refresh - AJAX">
+    	<img src="https://your-iot.github.io/Watmonitor/assets/img/gallery/gallery-2.JPG" style="display: block; max-width: 100%; height: auto;" alt="WaterWell Level monitor - webapp - Historical measured datas with timestamp" title="WaterWell Level monitor - webapp - Historical measured datas with timestamp"> 
+	<img src="https://your-iot.github.io/Watmonitor/assets/img/gallery/gallery-3.JPG" style="display: block; max-width: 100%; height: auto;" alt="WaterWell Level monitor - Record, minimal, maximal value per day, week, month" title="WaterWell Level monitor - Record, minimal, maximal value per day, week, month"> 
+	<img src="https://your-iot.github.io/Watmonitor/assets/img/gallery/gallery-4.JPG" style="display: block; max-width: 100%; height: auto;" alt="WaterWell Level monitor - graph of water level in time - week / year" title="WaterWell Level monitor - graph of water level in time - week / year">
+	</a>
+	<hr><center><h4>UART output of sensor nodes - FreeRTOS - ESP32:</h4></center><hr>	
+	<a href="https://hladinomer.eu/?lang=en">	
+	<img src="https://i.imgur.com/62K3i3T.png" style="display: block; max-width: 100%; height: auto;" alt="ESP32 - FreeRTOS - ESP-IDF - ultrasonic sensor measurement and data transfer to webserver via HTTP, POST transfer method" title="ESP32 - FreeRTOS - ESP-IDF - ultrasonic sensor measurement and data transfer to webserver via HTTP, POST transfer method"> 	
+	<img src="https://i.imgur.com/xyhyH8A.png" style="display: block; max-width: 100%; height: auto;" alt="ESP32 - FreeRTOS - ESP-IDF - ultrasonic sensor measurement and data transfer to webserver via HTTPS, POST transfer method" title="ESP32 - FreeRTOS - ESP-IDF - ultrasonic sensor measurement and data transfer to webserver via HTTPS, POST transfer method"> 
+	<img src="https://i.imgur.com/U3LqXzP.jpeg" style="display: block; max-width: 100%; height: auto;" alt="Supported hardware for well level project - Arduino - Ethernet and WiFi connectivity - ESP8266 - ESP32" title="Supported hardware for well level project - Arduino - Ethernet and WiFi connectivity - ESP8266 - ESP32">   
+<img src="https://i.imgur.com/du39Nwp.jpg" style="display: block; max-width: 100%; height: auto;" alt="IoT ultrasonic sensors suitable for solar power, LoRaWAN, WiFi support" title="IoT ultrasonic sensors suitable for solar power, LoRaWAN, WiFi support"> 	
+<img src="https://i.imgur.com/wSRR2Y5.jpg" style="display: block; max-width: 100%; height: auto;" alt="QR code scanner - AR for ultrasonic sensor" title="QR code scanner - AR for ultrasonic sensor"> 	
+</a>
+		</center>					
+ </div>
+		</div>
+</div>
+</body>
+</html>

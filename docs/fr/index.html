@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<!-- Primary Meta Tags -->
+<title>Surveillance du Niveau d'Eau IoT avec Arduino, ESP8266, ESP32 et Sigfox</title>
+    <!-- Meta description with essential keywords for SEO -->
+    <meta name="description" content="Découvrez des solutions de surveillance de niveau d'eau IoT utilisant Arduino, ESP8266, ESP32, compatibles avec Ethernet, WiFi, et Sigfox pour des applications dans les puits, réservoirs, et plus encore.">
+    <!-- Meta keywords for SEO relevance -->
+    <meta name="keywords" content="surveillance niveau d'eau, IoT, Arduino, ESP8266, ESP32, Sigfox, capteurs à ultrasons, capteurs de distance, réseau LPWAN, moniteur niveau d'eau, puits, réservoirs d'eau, microcontrôleurs, modules Ethernet, Wiznet, W5100, W5500, capteur HC-SR04, JSN-SR04T">
+	
+<!-- Open Graph / Facebook -->
+	<meta name="robots" content="index, follow">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://martinius96.github.io/hladinomer-studna-scripty/fr/index.html">
+	<meta property="og:title" content="Tableau de bord IoT - Indicateur de niveau - ESP32, Low Power">
+	<meta property="og:description" content="Le tableau de bord IoT pour le Level Meter permet de recevoir des données à partir de nœuds de capteurs construits sur ESP32, ESP8266, Arduino.">
+	<meta property="og:image" content="">
+
+<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://martinius96.github.io/hladinomer-studna-scripty/fr/index.html">
+	<meta property="twitter:title" content="Tableau de bord IoT - Indicateur de niveau - ESP32, Low Power">
+	<meta property="twitter:description" content="Le tableau de bord IoT pour le Level Meter permet de recevoir des données à partir de nœuds de capteurs construits sur ESP32, ESP8266, Arduino.">
+	<meta property="twitter:image" content="">
+	
+	<link rel="icon" type="image/png" href="https://martinius96.github.io/termostat-ethernet/favicon.png">
+	<link rel="sitemap" type="application/xml" title="Sitemap" href="../../sitemap.xml" />
+	<meta name="google-site-verification" content="UwZZh2EXv3iWUAi_1Z0hLxVCz6ySJ4UdY_BPoLtejwo" />    	
+	<meta property='fb:admins' content='100001242570317'>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>   
+	<style>
+		table, th, td {
+  			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+  		<div class="row">
+    			<div class="col-sm-12">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      	<li class="active"><a href="index.html">Indicateur de niveau</a></li>
+	<li><a href="zapojenie.html">Câblage</a></li>    
+	<li><a href="https://hladinomer.eu/QR/">Visualisation statique QR</a></li>
+		<li><a href="https://hladinomer.eu/AR/">Visualisation en réalité augmentée</a></li>
+		<li><a href="https://github.com/martinius96/hladinomer-studna-scripty/tree/master/examples/Tools_Integrations">Intégrations</a></li>
+<a href="../index.html"><img src="https://futbalovysen.sk/wp-content/uploads/slovakia.png" alt="Slovak flag.png, 2,2kB" title="Slovakia" height="32" width="32"></a>
+	<a href="../en/index.html"><img src="https://i2.wp.com/facsusa.com/wp-content/uploads/2017/05/Flag-of-England.png?ssl=1" alt="English.png, 2,2kB" title="English" height="32" width="32"></a>
+<a href="../de/index.html"><img src="https://i.imgur.com/kY5DFH5.png" alt="German.png, 2,2kB" title="German" height="32" width="32"></a>         
+<a href="../ru/index.html"><img src="https://i.imgur.com/3R5jVrX.png" alt="Russian.png, 2,2kB" title="Russian" height="32" width="32"></a>
+<a href="../es/index.html"><img src="https://i.imgur.com/cIOW0G7.png" alt="Spanish.png, 2,2kB" title="Spanish" height="32" width="32"></a>
+<a href="https://github.com/martinius96/hladinomer-studna-scripty/tree/master/examples/Hladinomer" class="btn btn-info" role="button">Firmware</a>
+<!---<a href="th/zapojenie.html"><img src="https://i.imgur.com/9jqINRw.png" alt="Thai.png, 2,2kB" title="Thai" height="32" width="32"></a>-->
+</ul>
+  </div>
+</nav>  
+<div class="alert alert-success">
+<strong>Exemples de codes sources pour Arduino, ESP8266, ESP32 (Ethernet / WiFi / LoRaWAN): </strong><a href="https://github.com/martinius96/hladinomer-studna-scripty/">Dépôt de projet Github</a>
+</div>	
+<div class="alert alert-info">
+<strong>Le tableau de bord IoT avec votre matériel peut être essayé ici: </strong>
+<a href="https://hladinomer.eu/?lang=fr" class="btn btn-success" role="button">HTTPS IoT Dashboard</a>
+</div>	
+<center><h2>Mesure de la hauteur du niveau d'eau dans le puits par méthode ultrasonique</h2></center>
+<div class="alert alert-success">
+	<strong>Prise en charge du scanner QR pour la visualisation des données des capteurs</strong>
+</div>	
+<center>
+<img src="https://i.imgur.com/4IkaCp2.jpeg" style="display: block; max-width: 100%; height: auto;" alt="Réalité augmentée - liste des données actuelles du portail IoT" title="Réalité augmentée - liste des données actuelles du portail IoT">
+</center>
+<center> 
+	<h2>Matériel de contrôle - microcontrôleurs AVR / ESP compatibles</h2>
+</center>	
+<hr>				
+<div class="row">
+<div class="col-sm-2"><center><img src="https://i.imgur.com/wtnzKqO.png" width="128px" height="128px" style="border-radius: 50%;" alt="Control microcontroller Arduino UNO" title="Control microcontroller Arduino UNO"><br><b><a href="https://www.ebay.com/itm/254532156570">Arduino UNO</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/XHC8DBe.png" width="128px" height="128px" style="border-radius: 50%;" alt="Contrôle du microcontrôleur Arduino Nano" title="Contrôle du microcontrôleur Arduino Nano"><br><b><a href="https://www.ebay.com/itm/252742123829">Arduino Nano</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/fPxr64q.png" width="128px" height="128px" style="border-radius: 50%;" alt="Contrôle du microcontrôleur Arduino Mega 1280/25" title="Contrôle du microcontrôleur Arduino Mega 1280/2560"><br><b><a href="https://www.ebay.com/itm/304122418040">Arduino Mega 1280/2560</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/koSyFuW.png" width="128px" height="128px" style="border-radius: 50%;" alt="Contrôle du microcontrôleurr NodeMCU v2 / v3 Lolin - ESP8266-12E / ESP8266-12F" title="Contrôle du microcontrôleur NodeMCU v2 / v3 Lolin - ESP8266-12E / ESP8266-12F"><br><b><a href="https://www.ebay.com/itm/252718027546">NodeMCU (ESP8266)</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/FV9xi6K.png" width="128px" height="128px" style="border-radius: 50%;" alt="Contrôle du microcontrôleur Wemos D1 Mini - ESP8266-12E / ESP8266-12F" title="Contrôle du microcontrôleur Wemos D1 Mini - ESP8266-12E / ESP8266-12F"><br><b><a href="https://www.ebay.com/itm/254535886946">Wemos D1 / D1 Mini (ESP8266)</a></b></center></div>
+	<div class="col-sm-2"><center><img src="https://i.imgur.com/BczG03b.png" width="128px" height="128px" style="border-radius: 50%;" alt="Contrôle du microcontrôleur ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S" title="Contrôle du microcontrôleur ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S"><br><b><a href="https://www.ebay.com/itm/254953129496">ESP32 DevKit</a></b></center></div>
+</div>	
+<hr>	
+<center> 
+	<h2>Modules de technologie de transmission - Ethernet / Sigfox IoT</h2>
+</center>
+<hr>
+<div class="row">
+<div class="col-sm-2"><center><img src="https://i.imgur.com/aaS35X2.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet shield Wiznet W5100" title="Ethernet shield Wiznet W5100"><br><b><a href="https://www.ebay.com/itm/185017231005">Ethernet shield Wiznet W5100</a></b></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/mz4dhRA.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul Wiznet W5500" title="Ethernet modul Wiznet W5500"><br><b><a href="https://www.ebay.com/itm/263116282333">Ethernet module Wiznet W5500</a></b></center></div>
+<div class="col-sm-4"><center><img src="https://i.imgur.com/ppyXzMM.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul LAN 8720 PHY Ethernet" title="Ethernet modul LAN 8720 PHY Ethernet"><br><b><a href="https://www.ebay.com/itm/112102912664">Ethernet modul LAN8720</a></b></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/yIZEKct.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul MicroChip ENC28J60" title="Ethernet modul MicroChip ENC28J60"><br><b><a href="https://www.ebay.com/itm/252798986559">Ethernet module ENC28J60</a></b></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/r2Q4faF.png" width="128px" height="128px" style="border-radius: 50%;" alt="Sigfox Wisol modem - IoT LPWAN Node 868 MHz" title="Sigfox Wisol modem - IoT LPWAN Node 868 MHz"><br><b><a href="https://www.ebay.com/itm/113194034192">Sigfox WISOL SFM10R1</a></b></center></div>
+</div>
+<hr>
+<center> 
+	<h2>Capteurs de distance à ultrasons compatibles</h2>
+</center>	
+<hr>				
+<div class="row">
+<div class="col-sm-2"><center><img src="https://i.imgur.com/t4HDpjA.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ultrasonic distance sensor - HC-SR04" title="Ultrasonic distance sensor - HC-SR04"><br><b><a href="https://www.ebay.com/itm/191841217528">HC-SR04</a></b></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/WXWD0wt.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ultrasonic distance sensor - HC-SR05" title="Ultrasonic distance sensor - HC-SR05"><br><b><a href="https://www.ebay.com/itm/271666928961">HC-SR05</a></b></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/I7O3IGQ.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ultrasonic distance sensor - JSN-SR04T" title="Ultrasonic distance sensor - JSN-SR04T"><br><b><a href="https://www.ebay.com/itm/321714364470">JSN-SR04T</a></b></center></div>		
+<div class="col-sm-2"><center><img src="https://i.imgur.com/MuTRnZu.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ultrasonic distance sensor - HY-SRF05" title="Ultrasonic distance sensor - HY-SRF05"><br><b><a href="https://www.ebay.com/itm/252083407959">HY-SRF05</a></b></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/mKqoqgT.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ultrasonic distance sensor - Parallax PING)))™" title="Ultrasonic distance sensor - Parallax PING)))™"><br><b><a href="https://www.parallax.com/product/ping-ultrasonic-distance-sensor/">Parallax PING)))™</a></b></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/8Dogp3S.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ultrasonic distance sensor - DYP-ME007" title="Ultrasonic distance sensor - DYP-ME007"><br><b><a href="https://www.ebay.com/itm/154713159645">DYP-ME007</a></b></center></div>	
+</div>					
+<hr><center><h1>Indicateur de niveau - moniteur de niveau d'eau dans le puits</h1></center><hr>
+<p style="text-align: justify;">
+Le projet de compteur de niveau (Watmonitor) se compose d'une interface Web centrale conçue pour collecter des données à partir des nœuds de capteurs et les présenter visuellement aux utilisateurs. Les données actuelles de niveau d'eau sont affichées sur le tableau de bord, converties en volume du puits. Les données historiques de niveau d'eau sont également accessibles aux utilisateurs sous forme de visualisation tabulaire ou graphique avec des graphiques linéaires.
+L'interface Web responsive s'adapte à différentes résolutions d'écran et à divers appareils. L'interface Web du projet utilise un backend en PHP pour traiter les données entrantes via des requêtes HTTP POST. Le backend ajuste le niveau mesuré par rapport au niveau réel en fonction de la profondeur connue du puits, calcule le volume d'eau du puits en utilisant ce paramètre et le diamètre du puits. Les utilisateurs saisissent la profondeur et le diamètre du puits dans le système en fonction des proportions de leur puits.
+Les données sont transmises au serveur Web par un microcontrôleur, qui effectue des mesures toutes les 300 secondes (c'est-à-dire toutes les 5 minutes). Dans le cas d'une transmission via le réseau IoT Sigfox, les données sont envoyées toutes les 11 minutes, car le réseau limite les transmissions à un maximum de 140 messages par jour. Les mesures du niveau d'eau sont effectuées à l'aide de capteurs à ultrasons tels que HC-SR04, ou sa variante étanche JSN-SR04T, et d'autres capteurs avec des signaux de déclenchement/écho des séries RCW, US-XXX, IOE-SR0X, SR0X, HC-SR0X, HY-SRF0X, DYP-MEXXX, Parallax PING)))™.
+L'optimisation de l'interface Web, du backend et de la transmission des données garantit une expérience de surveillance efficace et fluide du niveau d'eau pour les utilisateurs.
+Cette version vise à améliorer la lisibilité à la fois pour les utilisateurs et les moteurs de recherche, en incorporant des mots-clés pertinents tout en préservant les détails techniques.
+</p>
+<center>
+<img src="https://i.imgur.com/6EZfZmi.png" style="display: block; max-width: 100%; height: auto;" alt="Water Level Monitor webapp dashboard in OS Android with automatic data update via jQuery" title="Water Level Monitor webapp dashboard in OS Android with automatic data update via jQuery">
+</center>
+<p style="text-align: justify;">
+Le principe de mesure des capteurs à ultrasons repose sur l'envoi d'un signal de déclenchement d'une durée de 10 microsecondes, rebondissant sur le niveau de l'eau avant de retourner au récepteur, également appelé Echo.
+La méthode Time-of-Flight est utilisée pour convertir le temps entre l'envoi et la réception du signal en une mesure du niveau d'eau différentiel du capteur. Un paramètre crucial pour ces capteurs à ultrasons est la largeur du faisceau, déterminant leur caractéristique de détection.
+Le capteur HC-SR04 offre une caractéristique de détection de 15°. Son faisceau relativement étroit le rend adapté aux puits et réservoirs plus étroits, bien qu'il ne soit pas étanche et présente un risque élevé de corrosion en raison de l'humidité dans le puits. Par conséquent, il est recommandé de placer ce capteur au-dessus du puits.
+Quant au capteur étanche JSN-SR04T, sa caractéristique de détection est de 45 à 60°, le rendant inadapté aux puits étroits où le faisceau s'élargit avec la distance. Un puits de diamètre plus important est requis (par exemple, 6 mètres de diamètre à une profondeur de 4,5 mètres).
+Les capteurs à ultrasons nécessitent peu d'entretien. Dans le cas d'un puits carré, le diamètre du cercle inscrit est utilisé pour établir la valeur de référence du cylindre d'eau et le volume du puits.
+La hauteur de niveau maximale mesurable par les capteurs est d'environ 400 à 450 cm, comme indiqué dans la fiche technique.
+Cette version vise à améliorer la clarté et l'optimisation pour les moteurs de recherche en utilisant des termes pertinents.
+</p>
+<div class="alert alert-info">
+<strong>Autres types de capteurs enregistreurs de niveau d'eau pouvant être intégrés (nécessaires pour créer votre propre firmware) :</strong>
+<li><b>Laser (LiDAR)</b> - (DFRobot DTOF LD19 LIDAR, DFRobot ToF Laser...)</li>
+<li><b>Hydrostatique (submersible)</b> - (LMK307, DPT200, PT20eco, HDL300...)</li>
+<li><b>Électrostatique (capacitif/inductif)</b> - XKC-Y25-NPN</li>
+<li><b>Pression (différentielle / avec capteur de compensation de pression atmosphérique)</b></li>
+<li><b>Optique</b> - (GP2Y0A02YK0F, YD-02F, FS-IR02 ...)</li>
+<li><b>Mécanique (flotteur)</b></li>
+<li><b>Magnétique (Hall)</b> - (VCL9, Sen-Hz41wa ...)</li>
+<li><b>Micro-ondes (radar)</b> - (CS476, CS475A-L, SP69, WLR 15/08/30 ...)</li>
+<li><b>Ultrasonique</b> - (A01NYUB, URM37), ou autre, option d'un bus industriel pour la sortie (RS-485, boucle de courant 4-20 mA, Modbus RTU, M-bus, PROFINET) </li>
+<li><b>Remarque :</b> Si le recalcul de la hauteur du niveau d'eau depuis le fond est effectué côté microcontrôleur, il est nécessaire de régler la profondeur du puits à 0 cm sur l'interface web. </li>
+</div>
+<hr><center><h3>Démonstration vidéo de l'interface Web - Watmonitor:</h3></center><hr>
+<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+  <!-- Prvé video -->
+  <div style="position: relative; padding-bottom: 56.25%; flex: 1 1 31%; height: 0; overflow: hidden;">
+    <iframe 
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+      src="https://www.youtube.com/embed/QgxNx3OvNR0?si=f2YKQoHWrMqFNSau" 
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Druhé video -->
+  <div style="position: relative; padding-bottom: 56.25%; flex: 1 1 31%; height: 0; overflow: hidden;">
+    <iframe 
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+      src="https://www.youtube.com/embed/QIKqTWMAnfU?si=DDF0YcxmrXbYyWUs" 
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Tretie video -->
+  <div style="position: relative; padding-bottom: 56.25%; flex: 1 1 31%; height: 0; overflow: hidden;">
+    <iframe 
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+      src="https://www.youtube.com/embed/BHcPwljOq5Q?si=cG_CzFJL5QBt0vVS" 
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
+</div>
+<hr><center><h4>Les capteurs à ultrasons conviennent pour:</h4></center><hr>
+<div class="alert alert-success">
+<li> Puits creusés </li>
+<li> Septiques et puisards </li>
+<li> Ruisseaux et lacs </li>
+<li> Réservoirs d'eau de pluie en plastique </li>
+<li> Force (mesure du remplissage en vrac) </li>
+<li> Conteneurs (suivi des déchets, remplissage des conteneurs de collecte) </li>
+<li> Chaudières (contrôle de bois, pellets, charbon, copeaux de bois) </li>
+<li> Puits et caves (surveillance des inondations / des eaux souterraines) </li>
+<li> Fabrication (détection des produits, leur hauteur et quantité, hauteur du matériau enroulé) </li>
+<li> Parkings (détection des places libres et occupées) </li>
+</div>
+<hr><center><h3>Les capteurs à ultrasons ne conviennent pas pour:</h3></center><hr>
+<div class="alert alert-danger">
+<li> Puits forés (en raison des caractéristiques de détection - faisceau large) </li>
+<li> Tuyaux et tubes (en raison des caractéristiques de détection - faisceau large) </li>
+<li> Aux puits avec un affluent (la surface ondulée atténue les ultrasons, la mesure est impossible / pas à pas) </li>
+<li> Dans des endroits avec un changement soudain de température (la température affecte le temps de propagation du son, de sorte que même le niveau stationnaire semble fluctuer) </li>
+<li> Réservoirs à vide (mesure impossible) </li>
+</div>
+<hr><center><h3>Principe de fonctionnement du mesureur de niveau - Schéma fonctionnel</h3></center><hr>
+<center><img src="https://i.imgur.com/VCobc6h.jpg" style="display: block; max-width: 100%; height: auto;" alt="Indicateur de niveau pour puisard, fosse septique, puits, principe de mesure - capteur de distance à ultrasons" title="Indicateur de niveau pour puisard, fosse septique, puits, principe de mesure - capteur de distance à ultrasons"></center>
+<p style="text-align: justify;">
+L'interface Web utilise des calculs trigonométriques pour estimer la profondeur maximale mesurable d'un puits avec un diamètre connu, un paramètre essentiel pour le calcul du volume du puits. Elle permet à l'utilisateur de déterminer la profondeur maximale adaptée à chaque capteur en fonction de ses caractéristiques.
+Le projet est conçu pour une facilité d'utilisation, même pour les non-initiés, qui peuvent choisir le capteur adapté sans avoir de connaissances approfondies. Le choix du microcontrôleur est également crucial dans le système.
+Pour ce projet, la plateforme Arduino (Uno/Mega) en révision R3 peut être utilisée avec un brochage identique, connectée à un shield Ethernet via l'interface ICSP. Les modules Ethernet de Wiznet W5100, W5500, USR-ES1, et le module Ethernet ENC28J60 de MicroChip sont pris en charge, offrant tous une connectivité HTTP avec le serveur Web.
+Les microcontrôleurs WiFi d'Espressif Systems, tels que ESP8266 et ESP32, sont également compatibles. Ils offrent divers modes de fonctionnement, y compris StandBy, StandBy + OTA avec téléchargement à distance du firmware, et mode veille profonde pour les applications ULP - Deep Sleep. Pour ESP8266 en mode veille, un cavalier physique entre GPIO16 (WAKE) et RST est nécessaire.
+Les microcontrôleurs ESP permettent la mise en œuvre de la connectivité HTTPS avec le serveur Web. ESP32 peut être utilisé avec le module Ethernet PHY LAN8720 via l'interface RMII, prenant en charge les connexions HTTP et HTTPS.
+Les certificats racines intégrés dans les microcontrôleurs sont valables 10 à 20 ans, évitant ainsi un renouvellement fréquent. Les données sur le niveau d'eau et le volume du puits sont disponibles au format JSON depuis l'interface Web.
+Le projet peut être intégré au projet Level meter via MQTT dans des systèmes domotiques tels que Hassio, Domoticz, Loxone, pour afficher le niveau d'eau dans des tableaux de bord personnalisés, par exemple, Grafana.
+Cette version vise à améliorer la lisibilité tout en incorporant des termes pertinents pour le référencement.
+</p>
+<div class="alert alert-info">
+	<strong>Implémentations de programmes pour Arduino, ESP8266, ESP32 (nécessite l'installation de la bibliothèque): </strong><a href="https://hladinomer.eu/program.php?lang=fr">Disponible ici</a>
+</div>	
+<hr><center><h4>Bibliothèques disponibles pour les microcontrôleurs (Arduino / ESP)</h4></center><hr>
+<div class="alert alert-danger" style="word-wrap:break-word;">
+	Archive de la bibliothèque (.zip) étendre à <strong>C:/Users/[User]/Documents/Arduino/libraries</strong>
+</div>
+<div class="table-responsive">   
+<table class="table" style="border: 1px solid black;">
+<thead>
+<tr>
+<th style="width: 25%">Le nom de la bibliothèque</th>
+<th style="width: 50%">Fonction bibliothèque</th>
+<th style="width: 25%">Télécharger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="width: 25%"><b>NewPing</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Bibliothèque pour microcontrôleurs AVR (ATmega) Arduino Uno / Nano / Mega.
+Il permet deffectuer des mesures avec des capteurs de distance à ultrasons RCW, US-XXX, IOE-SR0X, SR0X, HC-SR0X, HY-SRF0X, DYP-MEXXX, Parallax PING)))™.
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FNewPing" class="btn btn-success" role="button">Télécharger</a></td>
+</tr>
+<tr>
+<td style="width: 25%"><b>NewPingESP8266</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Bibliothèque pour microcontrôleurs ESP8266 et ESP32.
+Il permet deffectuer des mesures avec des capteurs de distance à ultrasons RCW, US-XXX, IOE-SR0X, SR0X, HC-SR0X, HY-SRF0X, DYP-MEXXX, Parallax PING)))™.
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FNewPingESP8266" class="btn btn-success" role="button">Télécharger</a></td>
+</tr>
+<tr>
+<td style="width: 25%"><b>Ethernet2</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Bibliothèque pour microcontrôleurs AVR (ATmega) Arduino Uno / Nano / Mega.
+Il permet la communication avec le module Ethernet Wiznet W5200 à W5500 via linterface SPI.
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FEthernet2" class="btn btn-success" role="button">Télécharger</a></td>
+</tr>
+<tr>
+<td style="width: 25%"><b>Ethernet3</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Bibliothèque pour microcontrôleurs AVR (ATmega) Arduino Uno / Nano / Mega.
+Il permet la communication avec le module Ethernet Wiznet W5500 V2 - USR-ES1 via linterface SPI.
+</p>
+</td>
+<td style="width: 25%"><a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fmartinius96%2Fhladinomer-studna-scripty%2Ftree%2Fmaster%2Fsrc%2FEthernet3" class="btn btn-success" role="button">Télécharger</a></td>
+</tr>
+</tbody>
+</table>
+	</div>
+<hr>
+<p style="text-align: justify;">
+Pour les sites sans couverture internet fixe, l'utilisation du réseau LPWAN IoT Sigfox est une option viable, couvrant presque entièrement la zone géographique de la France et des pays voisins. La technologie Sigfox permet la transmission de petits volumes de messages jusqu'à 12 octets de taille.
+Dans le cadre du projet Level meter, la valeur du niveau d'eau (4 octets - UINT_32) est envoyée. Pour un projet étendu avec un pluviomètre, une valeur de 8 octets est transmise, comprenant la hauteur du niveau d'eau et l'incrément des précipitations. Étant donné que Sigfox permet un maximum de 140 messages par jour, l'intervalle de transmission des données est étendu à 11 minutes.
+Dans les deux cas, le message n'utilise pas toute la longueur disponible de la charge utile. Les messages de charge utile peuvent également inclure diverses informations système, telles que des données GEO (longitude/latitude) basées sur les informations du service GPS Sigfox Atlas, le RSSI (Force du signal reçu), le numéro de message, et autres.
+Le module de communication utilisé dans le projet est un modem Sigfox WISOL 868 MHz UART LPWAN. Ce modem communique via des commandes AT sur l'interface UART, émulée par logiciel sur des microcontrôleurs. La communication s'effectue à une vitesse de 9600 bauds/s. Le modem WISOL est équipé d'un connecteur u.FL intégré sur le module PCB pour la connexion de l'antenne, améliorant considérablement la couverture, même à l'intérieur ou à l'ombre.
+Pour une transmission de données réussie, une couverture par deux, de préférence trois stations BTS ou plus, est requise. Le BTS envoie les informations transmises au backend Sigfox, où un rappel est nécessaire, démarrant après la réception des données. Ce rappel envoie une requête HTTP ou HTTPS au domaine où l'application Web s'exécute, utilisant la méthode POST avec une charge utile correctement codée attendue par le backend de l'application Web.
+Cette version vise à rendre le texte plus accessible tout en optimisant pour les moteurs de recherche.
+</p>
+<hr><center><h4>Couverture IoT LPWAN par Sigfox dans les pays francophones:</h4></center><hr>
+<center>
+<img src="https://i.imgur.com/tAHnRch.png" style="display: block; max-width: 100%; height: auto;" alt="Couverture de la France, Belgique, Luxembourg, Suisse par le réseau LPWAN IoT Sigfox - Indicateur de niveau pour un puits creusé" title="Couverture de la France, Belgique, Luxembourg, Suisse par le réseau LPWAN IoT Sigfox - Indicateur de niveau pour un puits creusé">
+<img src="https://i.imgur.com/AtWVe3O.png" style="display: block; max-width: 100%; height: auto;" alt="Couverture de la Guyane Française par le réseau LPWAN IoT Sigfox - Indicateur de niveau pour un puits creusé" title="Couverture de la Guyane Française par le réseau LPWAN IoT Sigfox - Indicateur de niveau pour un puits creusé">
+<img src="https://i.imgur.com/3rX198A.png" style="display: block; max-width: 100%; height: auto;" alt="Couverture de la Polynésie Française par le réseau LPWAN IoT Sigfox - Indicateur de niveau pour un puits creusé" title="Couverture de la Polynésie Française par le réseau LPWAN IoT Sigfox - Indicateur de niveau pour un puits creusé">
+</center>
+<div class="alert alert-info">
+<h4>Configuration du rappel du backend Sigfox pour les tests d'applications Web</h4>
+<b>Indicateur de niveau:</b>
+<li>Callbacks --> Custom --> New</li>
+<li><b>Nous écrirons dans "Custom payload config":</b> cislo1::uint:16</li>
+<li><b>Nous URL pattern:</b> https://hladinomer.eu/data.php (ou une autre URL de votre serveur web où le projet s'exécutera), la possibilité d'utiliser HTTPS</li>
+<li><b>Dans la méthode HTTP, sélectionnez:</b> POST</li>
+<li><b>Ajouter "Body" (corps du message):</b></li>
+<li>hodnota={customData#cislo1}&token=123456789</li>
+<li><b>Nous Content-Type:</b> application/x-www-form-urlencoded</li>
+</div>				
+<hr>
+<center> 
+     <h3>Captures d'écran de l'interface Web du projet de mesure de niveau</h3>
+     <hr>
+<a href="https://hladinomer.eu/?lang=fr">
+    	<img src="https://i.imgur.com/t1jF9dw.png" style="display: block; max-width: 100%; height: auto;" alt="Moniteur de niveau WaterWell - webapp - page principale - Dernières valeurs mesurées avec rafraîchissement automatique - AJAX" title="Moniteur de niveau WaterWell - webapp - page principale - Dernières valeurs mesurées avec rafraîchissement automatique - AJAX">
+    	<img src="https://i.imgur.com/HodoJsm.png" style="display: block; max-width: 100%; height: auto;" alt="Moniteur de niveau de puits d'eau - application Web - Données mesurées historiques avec horodatage" title="Moniteur de niveau de puits d'eau - application Web - Données mesurées historiques avec horodatage"> 
+	<img src="https://i.imgur.com/NPxXS2b.png" style="display: block; max-width: 100%; height: auto;" alt="Moniteur de niveau de puits d'eau - Enregistrement, valeur minimale, maximale par jour, semaine, mois" title="Moniteur de niveau de puits d'eau - Enregistrement, valeur minimale, maximale par jour, semaine, mois"> 
+	<img src="https://i.imgur.com/Cx2i6dG.png" style="display: block; max-width: 100%; height: auto;" alt="Moniteur de niveau de puits d'eau - graphique du niveau d'eau dans le temps - semaine / année" title="Moniteur de niveau de puits d'eau - graphique du niveau d'eau dans le temps - semaine / année"> 
+	<img src="https://i.imgur.com/xyhyH8A.png" style="display: block; max-width: 100%; height: auto;" alt="ESP32 - FreeRTOS - ESP-IDF - mesure du capteur à ultrasons et transfert de données vers le serveur Web via HTTPS, méthode de transfert POST" title="ESP32 - FreeRTOS - ESP-IDF - mesure du capteur à ultrasons et transfert de données vers le serveur Web via HTTPS, méthode de transfert POST">
+	<img src="https://i.imgur.com/U3LqXzP.jpeg" style="display: block; max-width: 100%; height: auto;" alt="Matériel pris en charge pour le projet de niveau puits - Arduino - Connectivité Ethernet et WiFi - ESP8266 - ESP32" title="Matériel pris en charge pour le projet de niveau puits - Arduino - Connectivité Ethernet et WiFi - ESP8266 - ESP32">  
+<img src="https://i.imgur.com/du39Nwp.jpg" style="display: block; max-width: 100%; height: auto;" alt="Capteurs de distance à ultrasons - HC-SR04 et JSN-SR04T avec matériel pour Watmonitor" title="Capteurs de distance à ultrasons - HC-SR04 et JSN-SR04T avec matériel pour Watmonitor"> 
+</a>
+		</center>			
+</center>  
+            <hr> 
+	
+ </div>
+		</div>
+</div>
+</body>
+</html>
